@@ -5,16 +5,14 @@ build/
 *.hex
 *.bin
 
-
 # Arduino backup
 *.ino.save
 
-
 # OS / IDE
 .vscode/
+.idea/
 .DS_Store
 Thumbs.db
 
-
-# Edge Impulse zip caches (optionally)
+# Edge Impulse zip caches (optional)
 edge_impulse_*.zip
