@@ -1,0 +1,157 @@
+<svg viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    Ultrasonic Water Level Detection System
+  </text>
+  <text x="400" y="55" font-size="14" text-anchor="middle" fill="#7f8c8d">
+    HC-SR04 Sensor Configuration
+  </text>
+  
+  <!-- Sensor Module -->
+  <g id="sensor">
+    <!-- Sensor body -->
+    <rect x="300" y="100" width="200" height="80" fill="#34495e" stroke="#2c3e50" stroke-width="2" rx="5"/>
+    
+    <!-- Sensor label -->
+    <text x="400" y="125" font-size="14" font-weight="bold" text-anchor="middle" fill="#ecf0f1">
+      HC-SR04
+    </text>
+    <text x="400" y="145" font-size="11" text-anchor="middle" fill="#bdc3c7">
+      Ultrasonic Sensor
+    </text>
+    
+    <!-- Transducers -->
+    <circle cx="350" cy="160" r="15" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+    <circle cx="450" cy="160" r="15" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+    
+    <!-- Transducer labels -->
+    <text x="350" y="165" font-size="10" text-anchor="middle" fill="#fff" font-weight="bold">T</text>
+    <text x="450" y="165" font-size="10" text-anchor="middle" fill="#fff" font-weight="bold">R</text>
+    <text x="350" y="200" font-size="9" text-anchor="middle" fill="#7f8c8d">Transmitter</text>
+    <text x="450" y="200" font-size="9" text-anchor="middle" fill="#7f8c8d">Receiver</text>
+    
+    <!-- Pins -->
+    <rect x="320" y="180" width="20" height="3" fill="#95a5a6"/>
+    <rect x="360" y="180" width="20" height="3" fill="#95a5a6"/>
+    <rect x="420" y="180" width="20" height="3" fill="#95a5a6"/>
+    <rect x="460" y="180" width="20" height="3" fill="#95a5a6"/>
+    
+    <text x="330" y="195" font-size="8" text-anchor="middle" fill="#7f8c8d">VCC</text>
+    <text x="370" y="195" font-size="8" text-anchor="middle" fill="#7f8c8d">TRIG</text>
+    <text x="430" y="195" font-size="8" text-anchor="middle" fill="#7f8c8d">ECHO</text>
+    <text x="470" y="195" font-size="8" text-anchor="middle" fill="#7f8c8d">GND</text>
+  </g>
+  
+  <!-- Mounting indication -->
+  <text x="400" y="230" font-size="12" font-weight="bold" text-anchor="middle" fill="#e74c3c">
+    ↓ MOUNTED FACING DOWNWARDS ↓
+  </text>
+  
+  <!-- Sound wave visualization -->
+  <g id="soundwaves" opacity="0.6">
+    <path d="M 400 240 Q 380 280 400 320" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+    <path d="M 400 240 Q 420 280 400 320" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+    <path d="M 400 240 Q 370 300 400 360" stroke="#3498db" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+    <path d="M 400 240 Q 430 300 400 360" stroke="#3498db" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- Distance markers -->
+  <g id="distance-full">
+    <!-- Vertical line for FULL level -->
+    <line x1="250" y1="240" x2="250" y2="280" stroke="#27ae60" stroke-width="3"/>
+    <line x1="245" y1="240" x2="255" y2="240" stroke="#27ae60" stroke-width="3"/>
+    <line x1="245" y1="280" x2="255" y2="280" stroke="#27ae60" stroke-width="3"/>
+    
+    <!-- Label -->
+    <text x="150" y="265" font-size="13" font-weight="bold" fill="#27ae60">FULL</text>
+    <text x="120" y="285" font-size="11" fill="#27ae60">Distance: 3-6 cm</text>
+    
+    <!-- Arrow with measurement -->
+    <path d="M 260 240 L 260 280" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowgreen)" marker-start="url(#arrowgreen)"/>
+  </g>
+  
+  <g id="distance-not-full">
+    <!-- Vertical line for NOT FULL level -->
+    <line x1="550" y1="240" x2="550" y2="340" stroke="#e67e22" stroke-width="3"/>
+    <line x1="545" y1="240" x2="555" y2="240" stroke="#e67e22" stroke-width="3"/>
+    <line x1="545" y1="340" x2="555" y2="340" stroke="#e67e22" stroke-width="3"/>
+    
+    <!-- Label -->
+    <text x="600" y="295" font-size="13" font-weight="bold" fill="#e67e22">NOT FULL</text>
+    <text x="580" y="315" font-size="11" fill="#e67e22">Distance: 8-12 cm</text>
+    
+    <!-- Arrow with measurement -->
+    <path d="M 560 240 L 560 340" stroke="#e67e22" stroke-width="2" marker-end="url(#arroworange)" marker-start="url(#arroworange)"/>
+  </g>
+  
+  <!-- Water Glass -->
+  <g id="glass">
+    <!-- Glass outline -->
+    <path d="M 300 380 L 300 650 Q 300 670 320 670 L 480 670 Q 500 670 500 650 L 500 380 Z" 
+          fill="none" stroke="#34495e" stroke-width="3"/>
+    
+    <!-- Glass base -->
+    <ellipse cx="400" cy="670" rx="90" ry="15" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+    
+    <!-- Water - FULL level -->
+    <ellipse cx="400" cy="280" rx="95" ry="20" fill="#3498db" opacity="0.7"/>
+    <rect x="305" y="280" width="190" height="340" fill="#3498db" opacity="0.5"/>
+    <ellipse cx="400" cy="620" rx="95" ry="20" fill="#3498db" opacity="0.7"/>
+    
+    <!-- Water - NOT FULL level -->
+    <ellipse cx="400" cy="340" rx="98" ry="20" fill="#e74c3c" opacity="0.3" stroke-dasharray="5,5" stroke="#e74c3c"/>
+    
+    <!-- Glass rim -->
+    <ellipse cx="400" cy="380" rx="100" ry="20" fill="#ecf0f1" opacity="0.3" stroke="#34495e" stroke-width="3"/>
+    
+    <!-- Water level indicators -->
+    <line x1="310" y1="280" x2="270" y2="280" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="180" y="285" font-size="11" font-weight="bold" fill="#27ae60">FULL Level</text>
+    
+    <line x1="510" y1="340" x2="550" y2="340" stroke="#e67e22" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="560" y="345" font-size="11" font-weight="bold" fill="#e67e22">Partial Level</text>
+  </g>
+  
+  <!-- Technical Specifications Box -->
+  <g id="specs">
+    <rect x="50" y="720" width="700" height="150" fill="#ecf0f1" stroke="#34495e" stroke-width="2" rx="10"/>
+    
+    <text x="400" y="745" font-size="16" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+      Technical Specifications &amp; Operation
+    </text>
+    
+    <!-- Left column -->
+    <text x="70" y="775" font-size="12" font-weight="bold" fill="#2c3e50">Sensor Specs:</text>
+    <text x="70" y="795" font-size="11" fill="#34495e">• Operating Voltage: 5V DC</text>
+    <text x="70" y="810" font-size="11" fill="#34495e">• Operating Current: 15mA</text>
+    <text x="70" y="825" font-size="11" fill="#34495e">• Frequency: 40 kHz ultrasonic</text>
+    <text x="70" y="840" font-size="11" fill="#34495e">• Range: 2cm - 400cm</text>
+    <text x="70" y="855" font-size="11" fill="#34495e">• Accuracy: ±3mm</text>
+    
+    <!-- Middle column -->
+    <text x="300" y="775" font-size="12" font-weight="bold" fill="#2c3e50">Detection Logic:</text>
+    <text x="300" y="795" font-size="11" fill="#27ae60">✓ FULL: 3-6 cm distance</text>
+    <text x="300" y="810" font-size="11" fill="#34495e">  → Water near sensor</text>
+    <text x="300" y="825" font-size="11" fill="#e67e22">✗ NOT FULL: 8-12 cm distance</text>
+    <text x="300" y="840" font-size="11" fill="#34495e">  → Water level low</text>
+    <text x="300" y="855" font-size="11" fill="#e74c3c">⚠ Empty: &gt;12 cm distance</text>
+    
+    <!-- Right column -->
+    <text x="530" y="775" font-size="12" font-weight="bold" fill="#2c3e50">How It Works:</text>
+    <text x="530" y="795" font-size="11" fill="#34495e">1. Sensor sends ultrasonic pulse</text>
+    <text x="530" y="810" font-size="11" fill="#34495e">2. Pulse reflects off water surface</text>
+    <text x="530" y="825" font-size="11" fill="#34495e">3. Sensor receives echo</text>
+    <text x="530" y="840" font-size="11" fill="#34495e">4. Calculate: Distance = Time × Speed/2</text>
+    <text x="530" y="855" font-size="11" fill="#34495e">   (Speed of sound: ~343 m/s)</text>
+  </g>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowgreen" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#27ae60"/>
+    </marker>
+    <marker id="arroworange" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#e67e22"/>
+    </marker>
+  </defs>
+</svg>
