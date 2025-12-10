@@ -1,4 +1,4 @@
-# Ignore build and temporary files
+# ignore build/temp files
 build/
 *.o
 *.elf
@@ -6,7 +6,7 @@ build/
 *.bin
 *.log
 
-# Arduino backup
+# Arduino IDE
 *.ino.save
 
 # OS / IDE
