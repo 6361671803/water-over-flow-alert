@@ -56,4 +56,13 @@ This repository runs a TinyML model (Edge Impulse) on Arduino Nano 33 BLE Rev2 t
 
 ---
 
-#
+#### Hardware Setup Summary
+
+- HC-SR04 ultrasonic sensor mounted above the glass, facing downward.
+- Distance 3–6 cm = FULL (buzzer ON), 8–12 cm = NOT FULL (buzzer OFF).
+- TRIG → D9
+- ECHO → voltage divider → D10
+- Buzzer driven from D8 (direct if 3.3V buzzer, via transistor if 5V).
+- Arduino Nano 33 BLE Rev2 powered via USB.
+- Common ground shared between sensor, Arduino, and buzzer.
+
