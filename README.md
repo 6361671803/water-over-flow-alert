@@ -1,68 +1,259 @@
-# 💧 Water Overflow Alert System — Arduino Nano 33 BLE Rev2 + Edge Impulse (TinyML)
 
-**Target board:** Arduino Nano 33 BLE Rev2 (3.3V logic)
+# 📘 **README.md — Water Overflow Alert System (Arduino Nano 33 BLE Rev2 + Edge Impulse)**
 
-This repository runs a TinyML model (Edge Impulse) on Arduino Nano 33 BLE Rev2 to detect `glass_full` vs `glass_not_full` using an HC-SR04 ultrasonic sensor. When the model predicts `glass_full`, an active buzzer alerts.
+```markdown
+# 💧 Water Overflow Alert System  
+**Arduino Nano 33 BLE Rev2 + HC-SR04 Ultrasonic Sensor + Edge Impulse (TinyML)**
 
----
+This project detects **when a glass or small tank is FULL** using an ultrasonic distance sensor (HC-SR04) and a TinyML model trained in **Edge Impulse**.  
+When the water reaches the FULL level (detected using ML), a **buzzer turns ON**.
 
-## Quick features
-- Offline TinyML inference on Nano 33 BLE Rev2  
-- HC-SR04 ultrasonic distance sensing  
-- Active buzzer alert  
-- Included dataset files for reproducibility
+This README represents the **final Overflow Detection System**, based entirely on **your dataset**.
 
 ---
 
-## Important hardware notes
-- **Nano 33 BLE Rev2 is 3.3V logic and NOT 5V tolerant.**  
-- If HC-SR04 is powered at **5V (recommended)**, **use a voltage divider or level shifter on the ECHO pin** to protect the Nano.  
-- If the buzzer requires 5V or draws > 20–30 mA, drive it through an NPN transistor or N-MOSFET and share common ground.
+# 🚀 Project Summary
+
+- Ultrasonic sensor continuously measures distance to water surface.
+- Distances are fed into a TinyML model running **on-device** on the Arduino Nano 33 BLE Rev2.
+- The model classifies:
+  - **glass_full** → Water level HIGH (3–6 cm)
+  - **glass_not_full** → Water level LOW (8–12 cm)
+- Buzzer turns ON only when **glass_full** is predicted.
+
+Entire system works **offline**, no WiFi needed.
 
 ---
 
-## Wiring summary
-- HC-SR04 VCC → 5V  
-- HC-SR04 GND → GND  
-- HC-SR04 TRIG → D9  
-- HC-SR04 ECHO → (voltage divider) → D10  
-- Buzzer + → 5V (if 5V buzzer) or D8 (if 3.3V & low current)  
-- Buzzer − → transistor collector / GND  
-- Arduino D8 → 1k → transistor base/gate (if using transistor)
+# 📂 Repository Structure
+
+```
+
+WaterOverflowAI/
+│
+├── README.md
+├── HW_NOTES.md
+├── .gitignore
+│
+├── code/
+│   └── water_overflow_alert_nano33ble.ino
+│
+├── model/
+│   └── edge_impulse_nano33ble_library.zip
+│
+├── dataset/
+│   ├── full/*.csv
+│   └── not_full/*.csv
+│
+└── images/
+├── wiring_nano33ble.png
+├── hardware_setup.png
+├── sensor_placement.png
+└── system_block_diagram.png
+
+```
 
 ---
 
-## Files in this repo
-- `/code/water_overflow_alert_nano33ble.ino` — Arduino sketch (replace include header with the one in your Edge Impulse ZIP)  
-- `/model/edge_impulse_nano33ble_library.zip` — Edge Impulse Arduino library (download from Edge Impulse Deployment)  
-- `/dataset/` — CSV training & test samples  
-- `/images/` — wiring diagram + photos + model accuracy screenshot  
-- `/HW_NOTES.md` — hardware safety notes (level shifting & buzzer driver)
+# 🧪 Dataset Explanation (VERY IMPORTANT)
+
+Your dataset contains distance readings from HC-SR04:
+
+| Condition | Distance | Label |
+|----------|----------|--------|
+| **FULL** | **3–6 cm** | `glass_full` |
+| **NOT FULL** | **8–12 cm** | `glass_not_full` |
+
+This makes the model extremely accurate because the distances **do not overlap**.
+
+➡️ Dataset is perfectly suited for **Overflow Detection**, not underflow.
 
 ---
 
-## How to get the Edge Impulse library (required)
-1. Go to your Edge Impulse project → **Deployment** → **Arduino Library**.  
-2. Choose **Quantized (int8)** and click **Build**.  
-3. Download the ZIP and upload it into `/model/edge_impulse_nano33ble_library.zip` in this repo, or import the ZIP into Arduino IDE: `Sketch → Include Library → Add .ZIP Library`.
+# 🎯 Working Principle
+
+1. HC-SR04 measures water distance.
+2. The Arduino collects multiple distance samples.
+3. These samples go into the **Edge Impulse ML model**.
+4. If model output = **glass_full**, the buzzer turns ON.
+5. Otherwise, buzzer stays OFF.
 
 ---
 
-## How to compile & upload
-1. Install board support (Arduino Boards Manager) for **Nano 33 BLE Rev2**.  
-2. Sketch → Include Library → Add .ZIP Library → select the Edge Impulse ZIP.  
-3. Tools → Board → **Arduino Nano 33 BLE Rev2**. Select port.  
-4. Open `/code/water_overflow_alert_nano33ble.ino`, replace the `#include` line with the exact header from the ZIP if needed, and upload.
+# 🧱 Hardware Setup
+
+### Components
+- Arduino Nano 33 BLE Rev2 (3.3V logic)
+- HC-SR04 ultrasonic sensor
+- Active buzzer (5V or 3.3V)
+- NPN transistor (for 5V buzzer)
+- Voltage divider (10kΩ + 4.7kΩ)
+- Breadboard + jumper wires
+- Water glass/cup
 
 ---
 
-#### Hardware Setup Summary
+# 🔌 Wiring Diagram (Nano 33 BLE Rev2)
 
-- HC-SR04 ultrasonic sensor mounted above the glass, facing downward.
-- Distance 3–6 cm = FULL (buzzer ON), 8–12 cm = NOT FULL (buzzer OFF).
-- TRIG → D9
-- ECHO → voltage divider → D10
-- Buzzer driven from D8 (direct if 3.3V buzzer, via transistor if 5V).
-- Arduino Nano 33 BLE Rev2 powered via USB.
-- Common ground shared between sensor, Arduino, and buzzer.
+### Ultrasonic Sensor
+| HC-SR04 Pin | Arduino Pin |
+|-------------|-------------|
+| VCC | 5V |
+| GND | GND |
+| TRIG | D9 |
+| ECHO | **D10 (through voltage divider)** |
+
+### Voltage Divider (protects 3.3V Arduino)
+```
+
+ECHO(5V) --- 10kΩ ---●--- 4.7kΩ --- GND
+|
+D10
+
+```
+
+### Buzzer (5V type with transistor)
+```
+
+D8 → 1kΩ → Base of NPN
+Emitter → GND
+Collector → Buzzer –
+Buzzer + → 5V
+
+````
+
+Images for GitHub:
+- wiring diagram → `/images/wiring_nano33ble.png`
+- setup photo → `/images/hardware_setup.png`
+
+---
+
+# 📐 Sensor Placement
+
+- HC-SR04 is fixed above the glass, pointing downward.
+- When water rises, distance decreases.
+- Dataset defines:
+  - **3–6 cm = FULL**
+  - **8–12 cm = NOT FULL**
+
+See `/images/sensor_placement.png`.
+
+---
+
+# 🧠 Machine Learning Model (Edge Impulse)
+
+### Impulse Design Used
+- **Input**: Ultrasonic distance readings  
+- **DSP block**: Raw data (no filters)  
+- **Classifier**: Dense Neural Network (quantized int8)  
+- **Labels**: `glass_full`, `glass_not_full`
+
+### Deployment
+1. Edge Impulse → **Deployment**  
+2. Select **Arduino Library**  
+3. Build → download ZIP  
+4. Add ZIP to Arduino IDE  
+5. Include header:  
+   ```cpp
+   #include <your_project_inferencing.h>
+````
+
+---
+
+# 🎵 Buzzer Logic
+
+```text
+IF prediction = glass_full AND confidence > 0.8
+    buzzer = ON
+ELSE
+    buzzer = OFF
+```
+
+---
+
+# 🌍 Real-World Applications
+
+### ✔ Household water overflow alert
+
+Stops water wastage by alerting when overhead tanks are full.
+
+### ✔ Automated filling systems
+
+Useful for beverage machines, laboratory liquids, etc.
+
+### ✔ Smart home appliances
+
+Prevents boiling water or milk overflowing.
+
+### ✔ Industrial container monitoring
+
+Detects liquid levels with a non-contact sensor.
+
+### ✔ Education & TinyML demonstration
+
+Shows how AI can run on microcontrollers for real-world sensing.
+
+---
+
+# ⚠️ Limitations
+
+### 1️⃣ Sensor accuracy depends on surface condition
+
+Foam, bubbles, or tilted sensor may cause wrong readings.
+
+### 2️⃣ Fixed height calibration
+
+Model works correctly **only** when:
+
+* Sensor is at same height
+* Same distance ranges (3–6 full, 8–12 not full)
+
+Changing the container requires retraining.
+
+### 3️⃣ Requires clean line-of-sight
+
+Ultrasonic sensor fails if objects block the path.
+
+### 4️⃣ Cannot detect water color, type, or movement
+
+Only distance is measured.
+
+### 5️⃣ Buzzer-only alert
+
+No IoT notifications unless added manually.
+
+---
+
+# 🔧 How to Run the Project
+
+1. Upload code from `/code/water_overflow_alert_nano33ble.ino`
+2. Add the Edge Impulse ZIP library to Arduino IDE
+3. Power Nano 33 BLE Rev2
+4. Open Serial Monitor
+5. Fill the glass with water
+
+✔ When water reaches 3–6 cm distance → BUZZER ON
+✔ When water is 8–12 cm → BUZZER OFF
+
+---
+
+# 📸 Images Used
+
+Place these in `/images/`:
+
+* wiring_nano33ble.png
+* hardware_setup.png
+* sensor_placement.png
+* system_block_diagram.png
+
+---
+
+# 📝 License
+
+MIT License (optional)
+
+---
+
+
+---
 
