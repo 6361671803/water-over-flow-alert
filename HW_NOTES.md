@@ -1,26 +1,27 @@
-# Hardware Notes — Nano 33 BLE Rev2 (3.3V)
+# Hardware Notes — Arduino UNO R3 (5V)
 
-## 1) HC-SR04 & ECHO level-shift
-If HC-SR04 is powered at 5V, use this voltage divider:
+## HC-SR04 wiring (UNO)
+- VCC -> 5V
+- GND -> GND
+- TRIG -> D9
+- ECHO -> D10
 
-ECHO --- R1 (10kΩ) ---+--- Nano D10 (input)
-                      |
-                     R2 (4.7kΩ)
-                      |
-                     GND
+## Buzzer wiring
+If buzzer draws low current and works at 3.3–5V:
+- D8 -> Buzzer + (or use 5V if buzzer is active and uses more current)
+- Buzzer - -> GND
 
-This reduces ~5V to ~3.2V safe for Nano. TRIG can be driven directly by Nano at 3.3V.
+If the buzzer is 5V and draws more current:
+- Use an NPN transistor:
+  - Buzzer + -> 5V
+  - Buzzer - -> Collector
+  - Emitter -> GND
+  - D8 -> 1kΩ -> Base
+- Tie common ground between Arduino and buzzer supply.
 
-## 2) Buzzer driver (active buzzer, 5V or >20mA)
-If buzzer is 5V/high current:
-- Buzzer + -> 5V
-- Buzzer - -> Collector (NPN like 2N2222) or Drain (N-MOSFET)
-- Emitter/Source -> GND
-- Arduino pin (D8) -> 1kΩ -> Base/Gate
-Share common ground between Nano and buzzer supply.
+## Power & grounding
+- USB supply is usually sufficient for UNO + HC-SR04 + small buzzer.
+- Use external power if additional components are added.
 
-If buzzer works at 3.3V and low current, you may connect directly to D8 and GND (verify buzzer specs).
-
-## 3) Power & ground
-- Always tie grounds together (Nano, sensor, buzzer power source).
-- If powering multiple devices, check USB/external supply current limits.
+## Safety
+- Avoid powering HC-SR04 at 3.3V unless you have tested the module. Most reliable on 5V with UNO.
