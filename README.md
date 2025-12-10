@@ -1,135 +1,44 @@
+# 💧 Water Overflow Alert System — Arduino Nano 33 BLE Rev2 + Edge Impulse (TinyML)
 
 
-# 🚨 Water Overflow Alert System using Arduino & Edge Impulse (AI-Based)
+**Target board:** Arduino Nano 33 BLE Rev2 (3.3V logic)
 
-This project prevents **water overflow** by detecting whether a **glass / cup / syntax tank is full or not**.
-Instead of using a basic level sensor, this project uses **AI (TinyML) and ultrasonic distance measurement** to classify water level in real time and activate a buzzer when the level reaches FULL.
+
+This repository contains a TinyML-based water level detection project that classifies *glass_full* and *glass_not_full* using an ultrasonic sensor (HC-SR04) and an Edge Impulse model running on an Arduino Nano 33 BLE Rev2. When the model predicts `glass_full`, the system turns a buzzer on to alert.
+
+
+## Quick features
+- Offline TinyML inference on Nano 33 BLE Rev2
+- HC-SR04 ultrasonic distance sensing
+- Active buzzer alert
+- Datasets included for reproducibility
+
+
+## Important hardware notes
+- **Nano 33 BLE Rev2 is 3.3V logic and NOT 5V tolerant.**
+- If HC-SR04 is powered at 5V (recommended), **use a voltage divider or level shifter on the ECHO pin** to protect the Nano.
+- If the buzzer requires 5V or more current, **drive it through an NPN transistor or logic MOSFET** and share ground.
+
+
+## Wiring (summary)
+- HC-SR04 VCC → 5V (or 3.3V if you know yours is stable at 3.3V)
+- HC-SR04 GND → GND
+- HC-SR04 TRIG → D9
+- HC-SR04 ECHO → (via voltage divider) → D10
+- Buzzer + → 5V (if 5V buzzer) or D8 (if 3.3V and low current)
+- Buzzer - → transistor collector / GND
+- Arduino pin D8 → base/gate driver resistor → transistor base/gate
+
+## How to build the Edge Impulse library (required)
+1. Open your Edge Impulse project → **Deployment** → **Arduino Library**.
+2. Choose **Quantized (int8)** and click **Build**.
+3. Download the ZIP and save as `/model/edge_impulse_nano33ble_library.zip` in this repo or instruct users to import it in Arduino IDE.
+
+## Test & Run
+1. Install Nano 33 BLE board support in Arduino IDE.
+2. Sketch → Include Library → Add .ZIP Library → select `edge_impulse_nano33ble_library.zip`.
+3. Select Tools → Board → Arduino Nano 33 BLE Rev2 → upload the `/code/*.ino` sketch.
+4. Open Serial Monitor @ 115200 to see sampling and inference logs.
+
 
 ---
-
-## 🧠 Project Concept
-
-The **ultrasonic sensor HC-SR04** is placed **above the water cup facing downward**.
-As the water rises, the distance between the **sensor and water surface decreases**.
-
-This pattern is sent to a **machine learning model trained on Edge Impulse**.
-
-| Water Level         | Distance       | ML Prediction | Buzzer |
-| ------------------- | -------------- | ------------- | ------ |
-| 3–6 cm from sensor  | glass_full     | 🔔 ON         |        |
-| 8–12 cm from sensor | glass_not_full | ❌ OFF         |        |
-
-The system runs **offline** on Arduino (no internet required).
-
----
-
-## 🎯 Goals of the Project
-
-✔ Detect full vs not-full automatically
-✔ Trigger buzzer to prevent overflow
-✔ Run AI model on microcontroller locally
-✔ Apply TinyML in a real-world problem
-
----
-
-## 🔌 Hardware Components
-
-| Component                 | Purpose                 |
-| ------------------------- | ----------------------- |
-| Arduino UNO R3            | Runs the ML model       |
-| Ultrasonic Sensor HC-SR04 | Captures water distance |
-| Active Buzzer             | Alerts when full        |
-| Jumper Wires              | Circuit connection      |
-| Breadboard (optional)     | For wiring arrangement  |
-
----
-
-## 🔧 Wiring Connections
-
-| HC-SR04 Pin | Arduino Pin |
-| ----------- | ----------- |
-| VCC         | 5V          |
-| GND         | GND         |
-| TRIG        | D9          |
-| ECHO        | D10         |
-
-| Buzzer Pin   | Arduino Pin |
-| ------------ | ----------- |
-| + (Positive) | D8          |
-| – (Negative) | GND         |
-
----
-
-## 💡 ML Model Summary
-
-| Parameter      | Value                          |
-| -------------- | ------------------------------ |
-| Platform       | Edge Impulse                   |
-| Sensor type    | Ultrasonic distance            |
-| Classes        | `glass_full`, `glass_not_full` |
-| Training input | Distance values (cm)           |
-| DSP block      | Raw data                       |
-| Learning block | Neural Network                 |
-| Deployment     | Arduino C++ library            |
-
-**Dataset collection conditions:**
-
-* FULL samples → 3–6 cm distance
-* NOT FULL samples → 8–12 cm distance
-
----
-
-## 🔁 Workflow of the System
-
-1. Sensor repeatedly measures distance
-2. Distance is fed into the TinyML model
-3. Model predicts:
-
-   * `glass_full`
-   * `glass_not_full`
-4. Action is taken:
-
-   * FULL → buzzer alerts
-   * NOT FULL → buzzer stays silent
-
----
-
-## 🧪 Training & Testing Results
-
-* Clear separation between FULL and NOT FULL datasets
-* High accuracy achieved after retraining
-* Real-time prediction works reliably in deployment
-
----
-
-## 📦 Repository Contents (Recommended)
-
-```
-/code                  → Arduino program (without model)
-/model                 → Edge Impulse library files
-/dataset               → CSV training + testing samples
-/images                → Wiring + circuit diagrams + setup photos
-/video                 → Demonstration video (optional)
-/README.md             → Project description
-```
-
----
-
-## 🧾 Applications
-
-* Household water tank alert
-* Smart kitchen water filling
-* Industrial liquid level detection
-* Overflow prevention systems
-
----
-
-## 📌 Conclusion
-
-This project demonstrates how **TinyML + Arduino** can be used to solve real-life problems efficiently without internet or cloud.
-By analyzing water level patterns using **machine learning**, the system becomes **more adaptable, smarter, and reliable** than traditional sensors.
-
----
-
-
-
