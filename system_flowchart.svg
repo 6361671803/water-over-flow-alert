@@ -1,0 +1,224 @@
+<svg viewBox="0 0 1000 1400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="500" y="40" font-size="26" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    Water Overflow Alert System - Algorithm Flowchart
+  </text>
+  
+  <!-- Decorative gradient definitions -->
+  <defs>
+    <linearGradient id="startGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#27ae60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#229954;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="processGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="decisionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f39c12;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e67e22;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="alertGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="safeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a085;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Start -->
+  <ellipse cx="500" cy="100" rx="80" ry="40" fill="url(#startGrad)" stroke="#229954" stroke-width="3"/>
+  <text x="500" y="108" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+    START
+  </text>
+  
+  <!-- Arrow 1 -->
+  <line x1="500" y1="140" x2="500" y2="180" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Initialize System -->
+  <rect x="350" y="180" width="300" height="70" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="210" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Initialize System
+  </text>
+  <text x="500" y="230" font-size="12" fill="white" text-anchor="middle">
+    • Setup HC-SR04 (TRIG=D9, ECHO=D10)
+  </text>
+  <text x="500" y="245" font-size="12" fill="white" text-anchor="middle">
+    • Setup Buzzer (D8)
+  </text>
+  
+  <!-- Arrow 2 -->
+  <line x1="500" y1="250" x2="500" y2="290" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Load TinyML Model -->
+  <rect x="350" y="290" width="300" height="70" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="320" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Load TinyML Model
+  </text>
+  <text x="500" y="340" font-size="12" fill="white" text-anchor="middle">
+    Edge Impulse ML Model
+  </text>
+  <text x="500" y="355" font-size="12" fill="white" text-anchor="middle">
+    (Trained on distance data)
+  </text>
+  
+  <!-- Arrow 3 -->
+  <line x1="500" y1="360" x2="500" y2="400" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Send Ultrasonic Pulse -->
+  <rect x="350" y="400" width="300" height="60" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="425" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Send Ultrasonic Pulse
+  </text>
+  <text x="500" y="445" font-size="12" fill="white" text-anchor="middle">
+    TRIG pin sends 10μs pulse
+  </text>
+  
+  <!-- Arrow 4 -->
+  <line x1="500" y1="460" x2="500" y2="500" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Measure Echo Time -->
+  <rect x="350" y="500" width="300" height="60" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="525" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Measure Echo Time
+  </text>
+  <text x="500" y="545" font-size="12" fill="white" text-anchor="middle">
+    ECHO pin receives reflected signal
+  </text>
+  
+  <!-- Arrow 5 -->
+  <line x1="500" y1="560" x2="500" y2="600" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Calculate Distance -->
+  <rect x="350" y="600" width="300" height="70" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="625" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Calculate Distance (cm)
+  </text>
+  <text x="500" y="645" font-size="12" fill="white" text-anchor="middle">
+    distance = (time × speed_of_sound) / 2
+  </text>
+  <text x="500" y="660" font-size="11" fill="white" text-anchor="middle" font-style="italic">
+    speed_of_sound = 343 m/s
+  </text>
+  
+  <!-- Arrow 6 -->
+  <line x1="500" y1="670" x2="500" y2="720" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- ML Model Classification (Diamond Decision) -->
+  <g id="ml-decision">
+    <path d="M 500 720 L 700 820 L 500 920 L 300 820 Z" 
+          fill="url(#decisionGrad)" stroke="#e67e22" stroke-width="3"/>
+    <text x="500" y="805" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+      TinyML Model
+    </text>
+    <text x="500" y="825" font-size="13" font-weight="bold" fill="white" text-anchor="middle">
+      Classify Distance
+    </text>
+    <text x="500" y="843" font-size="11" fill="white" text-anchor="middle">
+      Input: distance (cm)
+    </text>
+  </g>
+  
+  <!-- Left branch - FULL -->
+  <line x1="300" y1="820" x2="200" y2="820" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="240" y="810" font-size="13" font-weight="bold" fill="#e74c3c">
+    3-6 cm
+  </text>
+  <text x="240" y="828" font-size="12" font-weight="bold" fill="#e74c3c">
+    FULL
+  </text>
+  
+  <!-- FULL - Buzzer ON -->
+  <rect x="50" y="850" width="300" height="80" rx="10" fill="url(#alertGrad)" stroke="#c0392b" stroke-width="3"/>
+  <text x="200" y="880" font-size="15" font-weight="bold" fill="white" text-anchor="middle">
+    🔔 ALERT: Water Level FULL
+  </text>
+  <text x="200" y="902" font-size="13" fill="white" text-anchor="middle">
+    digitalWrite(buzzer_pin, HIGH)
+  </text>
+  <text x="200" y="920" font-size="12" fill="white" text-anchor="middle" font-weight="bold">
+    ⚠️ Buzzer ON - Prevent Overflow!
+  </text>
+  
+  <!-- Right branch - NOT FULL -->
+  <line x1="700" y1="820" x2="800" y2="820" stroke="#27ae60" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="730" y="810" font-size="13" font-weight="bold" fill="#27ae60">
+    8-12 cm
+  </text>
+  <text x="720" y="828" font-size="12" font-weight="bold" fill="#27ae60">
+    NOT FULL
+  </text>
+  
+  <!-- NOT FULL - Buzzer OFF -->
+  <rect x="650" y="850" width="300" height="80" rx="10" fill="url(#safeGrad)" stroke="#16a085" stroke-width="3"/>
+  <text x="800" y="880" font-size="15" font-weight="bold" fill="white" text-anchor="middle">
+    ✓ Safe: Water Level Normal
+  </text>
+  <text x="800" y="902" font-size="13" fill="white" text-anchor="middle">
+    digitalWrite(buzzer_pin, LOW)
+  </text>
+  <text x="800" y="920" font-size="12" fill="white" text-anchor="middle" font-weight="bold">
+    ✓ Buzzer OFF - No Action Needed
+  </text>
+  
+  <!-- Convergence -->
+  <line x1="200" y1="930" x2="200" y2="1000" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="800" y1="930" x2="800" y2="1000" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="200" y1="1000" x2="500" y2="1000" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="800" y1="1000" x2="500" y2="1000" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Wait/Delay -->
+  <rect x="350" y="1020" width="300" height="60" rx="10" fill="url(#processGrad)" stroke="#2980b9" stroke-width="3"/>
+  <text x="500" y="1045" font-size="14" font-weight="bold" fill="white" text-anchor="middle">
+    Wait / Delay
+  </text>
+  <text x="500" y="1065" font-size="12" fill="white" text-anchor="middle">
+    delay(500ms) - Check every 0.5 sec
+  </text>
+  
+  <!-- Loop back -->
+  <line x1="500" y1="1080" x2="500" y2="1120" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="500" y1="1120" x2="850" y2="1120" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="850" y1="1120" x2="850" y2="430" stroke="#2c3e50" stroke-width="3"/>
+  <line x1="850" y1="430" x2="650" y2="430" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <text x="720" y="1110" font-size="13" font-weight="bold" fill="#2c3e50">
+    Continuous Monitoring Loop
+  </text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <!-- Information Box -->
+  <g id="info-box">
+    <rect x="50" y="1200" width="900" height="170" fill="#e8f4f8" stroke="#1976D2" stroke-width="3" rx="10"/>
+    
+    <text x="500" y="1230" font-size="18" font-weight="bold" fill="#1976D2" text-anchor="middle">
+      🔍 Algorithm Details
+    </text>
+    
+    <text x="70" y="1260" font-size="13" fill="#2c3e50">
+      <tspan font-weight="bold">Sensor Operation:</tspan> HC-SR04 sends ultrasonic pulse (40kHz) and measures time for echo return
+    </text>
+    
+    <text x="70" y="1285" font-size="13" fill="#2c3e50">
+      <tspan font-weight="bold">ML Classification:</tspan> Edge Impulse TinyML model trained on distance data with two classes:
+    </text>
+    <text x="90" y="1305" font-size="12" fill="#2c3e50">
+      • <tspan font-weight="bold" fill="#e74c3c">glass_full</tspan> (3-6 cm) → High risk of overflow
+    </text>
+    <text x="90" y="1323" font-size="12" fill="#2c3e50">
+      • <tspan font-weight="bold" fill="#27ae60">glass_not_full</tspan> (8-12 cm) → Safe water level
+    </text>
+    
+    <text x="70" y="1350" font-size="13" fill="#2c3e50">
+      <tspan font-weight="bold">Buzzer Alert:</tspan> Active buzzer provides immediate audio warning when overflow risk detected
+    </text>
+  </g>
+</svg>
