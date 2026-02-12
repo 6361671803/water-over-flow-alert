@@ -1,6 +1,6 @@
 
 # 🧠 Edge Impulse — Build & Deploy (Arduino UNO r3 / AVR)
-#video on project https://youtu.be/mK_yUaLWeFs
+#video on project 
 1. Open your Edge Impulse project and make sure the impulse uses the same sampling interval and frame length you collected.  
 2. Go to **Deployment → Arduino Library**.  
 3. Under Target, choose **Arduino (AVR)** or **Arduino UNO** (if shown).  
